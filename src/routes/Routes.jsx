@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Main from "../layouts/Main";
 import NewsLayout from "../layouts/NewsLayout";
 import Category from "../pages/Home/Category/Category";
@@ -12,7 +12,8 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Home></Home>
+                element: <Navigate to="/category/0"></Navigate>
+                
             },
             {
                 path: "/category/:id",
@@ -29,7 +30,8 @@ const router = createBrowserRouter([
         children:[
             {
                 path: ':id',
-                element:<News></News>
+                element:<News></News>,
+                loader: ({params}) => fetch(`https://the-news-dragon-server-jhankarphero.vercel.app/news/${params.id}`)
             }
         ]
     }
