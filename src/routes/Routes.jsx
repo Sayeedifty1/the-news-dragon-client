@@ -1,22 +1,44 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import LoginLayout from "../layouts/LoginLayout";
 import Main from "../layouts/Main";
 import NewsLayout from "../layouts/NewsLayout";
 import Category from "../pages/Home/Category/Category";
 import Home from "../pages/Home/Home/Home";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Login/Register/Register";
 import News from "../pages/News/News";
 
 const router = createBrowserRouter([
+
     {
-        path: '/',
-        element: <Main></Main>,
-        children: [
+        path:"/",
+        element: <LoginLayout></LoginLayout>,
+        children:[
             {
                 path: '/',
                 element: <Navigate to="/category/0"></Navigate>
-                
             },
             {
-                path: "/category/:id",
+                path:"/login",
+                element:<Login></Login>
+            },
+            {
+                path:"/register",
+                element:<Register></Register>
+            }
+        ]
+    },
+    {
+        path: 'category',
+        element: <Main></Main>,
+        children: [
+            // {
+            //     path: '/',
+            //     element: <Navigate to="/category/0"></Navigate>
+                
+            // },
+            {
+                path: ":id",
                 element:<Category></Category>,
                 loader: ({params}) => fetch(`http://localhost:5000/categories/${params.id}`)
             },
@@ -31,7 +53,7 @@ const router = createBrowserRouter([
             {
                 path: ':id',
                 element:<News></News>,
-                loader: ({params}) => fetch(`https://the-news-dragon-server-jhankarphero.vercel.app/news/${params.id}`)
+                loader: ({params}) => fetch(`http://localhost:5000/news/${params.id}`)
             }
         ]
     }
